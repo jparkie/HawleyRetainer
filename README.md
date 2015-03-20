@@ -1,5 +1,7 @@
 # HawleyRetainer
-**An Android annotation processing and code generation library to retain complex objects which cannot be parceled nor serialized into a `Bundle` across configuration changes.** It utilizes a retained fragment implementing the `Map` interface to provide identical operations to a `Bundle`. 
+**An Android annotation processing and code generation library to retain complex objects which cannot be parceled nor serialized into a `Bundle` across configuration changes.**
+
+It utilizes a retained fragment implementing the `Map` interface to provide identical operations to a `Bundle`. 
 
 It does not behave like a Singleton class as it observes the lifecycle of its bound `Activity`, thus, it destroys itself accordingly. This characteristic is useful to prevent fields being retained in memory beyond the user-initiated destruction of an `Activity` like a Singleton while still being retained during configuration changes. 
 
