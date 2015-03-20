@@ -12,7 +12,7 @@ Utilize this class as a means of simplifying the retention of certain expensive 
 ```java
 public class ExampleActivity extends Activity {
   @HawleyRetain
-  Observable mNetworkResponse;
+  Observable<Response> mNetworkResponse;
   
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,15 @@ public class ExampleActivity extends Activity {
     HawleyRetainer.saveRetainedObjectMap(this, this);
   }
 }
+```
+
+## Usage
+```java
+@HawleyRetain // A single annotation used to annotate any number of fields which you want to retain.
+
+public static <T> void saveRetainedObjectMap(T target, Activity activity);
+
+public static <T> void restoreRetainedObjectMap(T target, Activity activity)
 ```
 
 The methods can be called upon any target class as long as an `Activity` can be specified along with it. The retainer will recursively traverse the inheritance graph to inject all annotated fields. Please remember that the support library variants of `Fragment` and `Activity` extend from them. As a result, the methods do not have overloads.
