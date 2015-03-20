@@ -33,6 +33,38 @@ The methods can be called upon any target class as long as an `Activity` can be 
 ## Download
 *Preparing for Maven Central.*
 
+### JitPack
+
+Add the JitPack repository to your root build file:
+```groovy
+repositories {
+  maven {
+    url "https://jitpack.io"
+  }
+}
+```
+
+Add the following Gradle plugin to your root build file to support annotation processing:
+```groovy
+dependencies {
+  classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+}
+```
+
+In your project build file apply the plugin and include the library as a dependency:
+```groovy
+apply plugin: 'com.neenbedankt.android-apt'
+
+...
+
+dependencies {
+  apt 'com.github.jparkie:HawleyRetainer.compiler:1.0.0-RC1-JP'
+  compile 'com.github.jparkie:HawleyRetainer.api:1.0.0-RC1-JP'
+}
+```
+
+**If you are using other annotation processing and code generation libraries like Dagger, do not state the dependency as `provided`. Instead state the dependency as `apt` such that the code generation will run over the classes: `apt 'com.squareup.dagger:dagger-compiler:1.2.2'`.**
+
 ## License
 
     Copyright 2015 Jacob Park
