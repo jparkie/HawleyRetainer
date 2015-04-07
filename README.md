@@ -35,6 +35,8 @@ public class ExampleActivity extends Activity {
 public static <T> void saveRetainedObjectMap(T target, Activity activity);
 
 public static <T> void restoreRetainedObjectMap(T target, Activity activity);
+
+public static <T> Map retrieveRetainerFragmentMap(T target, Activity activity);
 ```
 
 The methods can be called upon any target class as long as an `Activity` can be specified along with it. The retainer will recursively traverse the inheritance graph to inject all annotated fields. Please remember that the support library variants of `Fragment` and `Activity` extend from them. As a result, the methods do not have overloads.
@@ -67,8 +69,8 @@ apply plugin: 'com.neenbedankt.android-apt'
 ...
 
 dependencies {
-  apt 'com.github.jparkie:HawleyRetainer.compiler:1.0.0-RC1-JP'
-  compile 'com.github.jparkie:HawleyRetainer.api:1.0.0-RC1-JP'
+  apt 'com.github.jparkie:HawleyRetainer.compiler:1.0.1'
+  compile 'com.github.jparkie:HawleyRetainer.api:1.0.1'
 }
 ```
 
