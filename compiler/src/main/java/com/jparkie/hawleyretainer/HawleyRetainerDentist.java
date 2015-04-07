@@ -35,7 +35,7 @@ import javax.lang.model.type.TypeMirror;
  * public class ExampleActivity$$HawleyRetainer<T extends com.jparkie.example.ExampleActivity> extends Retainer.Object<T> {
  *  @Override
  *  public void restoreRetainedObjectMap(T target, Activity activity) {
- *      final RetainerFragmentMap retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity);
+ *      final RetainerFragmentMap retainedMap = RetainerFragmentMap.<T>findOrCreateRetainerFragmentMap(target, activity);
  *      if (target.mObservable == null) {
  *          if (retainedMap.containsKey("mObservable")) {
  *              target.mObservable = (Observable<File>)retainedMap.get("mObservable");
@@ -45,7 +45,7 @@ import javax.lang.model.type.TypeMirror;
  *
  *  @Override
  *  public void saveRetainedObjectMap(T target, Activity activity) {
- *      final RetainerFragmentMap retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity);
+ *      final RetainerFragmentMap retainedMap = RetainerFragmentMap.<T>findOrCreateRetainerFragmentMap(target, activity);
  *      if (target.mObservable != null) {
  *          retainedMap.put("mObservable", target.mObservable);
  *      }
@@ -116,12 +116,12 @@ public final class HawleyRetainerDentist {
             builder.addStatement("super.restoreRetainedObjectMap(target, activity)");
         }
 
-        builder.addStatement("final $T retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity)", ClassName.get(RetainerFragmentMap.class));
+        builder.addStatement("final $T retainedMap = RetainerFragmentMap.<$T>findOrCreateRetainerFragmentMap(target, activity)", ClassName.get(RetainerFragmentMap.class), TypeVariableName.get("T"));
 
         for (FieldBinding fieldBinding : mFieldBindings) {
             builder.beginControlFlow("if (retainedMap.containsKey($S))", fieldBinding.mName)
-                        .addStatement("target.$N = ($T)retainedMap.get($S)", fieldBinding.mName, fieldBinding.mType, fieldBinding.mName)
-                        .endControlFlow();
+                    .addStatement("target.$N = ($T)retainedMap.get($S)", fieldBinding.mName, fieldBinding.mType, fieldBinding.mName)
+                    .endControlFlow();
         }
 
         return builder.build();
@@ -139,7 +139,7 @@ public final class HawleyRetainerDentist {
             builder.addStatement("super.saveRetainedObjectMap(target, activity)");
         }
 
-        builder.addStatement("final $T retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity)", ClassName.get(RetainerFragmentMap.class));
+        builder.addStatement("final $T retainedMap = RetainerFragmentMap.<$T>findOrCreateRetainerFragmentMap(target, activity)", ClassName.get(RetainerFragmentMap.class), TypeVariableName.get("T"));
 
         for (FieldBinding fieldBinding : mFieldBindings) {
             builder.beginControlFlow("if (target.$N != null)", fieldBinding.mName)

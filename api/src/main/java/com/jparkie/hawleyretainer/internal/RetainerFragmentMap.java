@@ -15,12 +15,15 @@ public final class RetainerFragmentMap extends Fragment implements Map<String, O
 
     public RetainerFragmentMap() {}
 
-    public static RetainerFragmentMap findOrCreateRetainerFragmentMap(Activity activity) {
+    public static <T> RetainerFragmentMap findOrCreateRetainerFragmentMap(T target, Activity activity) {
+        if (target == null) {
+            throw new NullPointerException(TAG + ": Provided target argument cannot be null.");
+        }
         if (activity == null) {
             throw new NullPointerException(TAG + ": Provided activity argument cannot be null.");
         }
 
-        final String uniqueRetainFragmentTag = activity.getLocalClassName() + ":" + TAG;
+        final String uniqueRetainFragmentTag = target.getClass().getSimpleName() + ":" + activity.getLocalClassName() + ":" + TAG;
         final FragmentManager fragmentManager = activity.getFragmentManager();
 
         RetainerFragmentMap retainerFragmentMap = (RetainerFragmentMap)fragmentManager.findFragmentByTag(uniqueRetainFragmentTag);

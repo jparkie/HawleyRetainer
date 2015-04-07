@@ -3,6 +3,7 @@ package com.jparkie.hawleyretainer;
 import android.app.Activity;
 
 import com.jparkie.hawleyretainer.internal.Retainer;
+import com.jparkie.hawleyretainer.internal.RetainerFragmentMap;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -128,5 +129,16 @@ public final class HawleyRetainer {
         Retainer.Object<T> currentRetainer = safeGetRetainer(target, new Retainer.Object<T>());
 
         currentRetainer.restoreRetainedObjectMap(target, activity);
+    }
+
+    /**
+     * Retrieve an instance of a RetainerFragmentMap for the specified target
+     * committed to the specified {@link android.app.Activity Activity}.
+     *
+     * @param target Target class from which the RetainerFragmentMap is tagged.
+     * @param activity Activity utilized to provide the {@link android.app.FragmentManager FragmentManager} to commit the internal retained fragment map.
+     */
+    public static <T> Map retrieveRetainerFragmentMap(T target, Activity activity) {
+        return RetainerFragmentMap.<T>findOrCreateRetainerFragmentMap(target, activity);
     }
 }
