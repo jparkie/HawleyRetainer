@@ -1,6 +1,5 @@
 package com.jparkie.hawleyretainer.sample;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -16,11 +15,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int DATA_DELAY = 2500; // 2500 Milliseconds.
-    private static final AtomicInteger DATA_SOURCE = new AtomicInteger(1);
 
     private TextView mNumberTextView;
 
@@ -35,10 +33,8 @@ public class MainActivity extends ActionBarActivity {
 
         mNumberTextView = (TextView)findViewById(R.id.numberTextView);
 
-        HawleyRetainer.restoreRetainedObjectMap(this, this);
-
         if (mDataObservable == null) {
-            mDataObservable = Observable.just(DATA_SOURCE.getAndIncrement())
+            mDataObservable = Observable.just(mDataSource.getAndIncrement())
                     .delay(DATA_DELAY, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -58,8 +54,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        HawleyRetainer.saveRetainedObjectMap(this, this);
     }
 
     @Override
