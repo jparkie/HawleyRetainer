@@ -113,17 +113,15 @@ public final class HawleyRetainerDentist {
                 .addParameter(Activity.class, "activity");
 
         if (mClassParent != null) {
-            builder.addStatement("super(target, activity)");
+            builder.addStatement("super.restoreRetainedObjectMap(target, activity)");
         }
 
         builder.addStatement("final $T retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity)", ClassName.get(RetainerFragmentMap.class));
 
         for (FieldBinding fieldBinding : mFieldBindings) {
-            builder.beginControlFlow("if (target.$N == null)", fieldBinding.mName)
-                        .beginControlFlow("if (retainedMap.containsKey($S))", fieldBinding.mName)
+            builder.beginControlFlow("if (retainedMap.containsKey($S))", fieldBinding.mName)
                         .addStatement("target.$N = ($T)retainedMap.get($S)", fieldBinding.mName, fieldBinding.mType, fieldBinding.mName)
-                        .endControlFlow()
-                    .endControlFlow();
+                        .endControlFlow();
         }
 
         return builder.build();
@@ -138,7 +136,7 @@ public final class HawleyRetainerDentist {
                 .addParameter(Activity.class, "activity");
 
         if (mClassParent != null) {
-            builder.addStatement("super(target, activity)");
+            builder.addStatement("super.saveRetainedObjectMap(target, activity)");
         }
 
         builder.addStatement("final $T retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity)", ClassName.get(RetainerFragmentMap.class));
