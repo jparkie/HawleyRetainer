@@ -113,7 +113,7 @@ public final class HawleyRetainerDentist {
                 .addParameter(Activity.class, "activity");
 
         if (mClassParent != null) {
-            builder.addStatement("super(target, activity");
+            builder.addStatement("super(target, activity)");
         }
 
         builder.addStatement("final $T retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity)", ClassName.get(RetainerFragmentMap.class));
@@ -138,7 +138,7 @@ public final class HawleyRetainerDentist {
                 .addParameter(Activity.class, "activity");
 
         if (mClassParent != null) {
-            builder.addStatement("super(target, activity");
+            builder.addStatement("super(target, activity)");
         }
 
         builder.addStatement("final $T retainedMap = RetainerFragmentMap.findOrCreateRetainerFragmentMap(activity)", ClassName.get(RetainerFragmentMap.class));
